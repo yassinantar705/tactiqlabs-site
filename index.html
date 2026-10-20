@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tactiq Labs – Verified football intelligence from match video</title>
+<meta name="description" content="Tactiq Labs turns the match footage clubs already record into verified player and ball tracking, tactical insight and coach-ready clips. Built in Egypt for MENA and Africa.">
+<meta property="og:title" content="Tactiq Labs – Verified football intelligence">
+<meta property="og:description" content="From match footage to the decision that matters. AI and computer vision with the analyst in control.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tactiqlabs.com">
+<link rel="canonical" href="https://tactiqlabs.com">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #0f1720; --muted: #566070; --accent: #0f9d58;
+    --accent-dark: #0b7a44; --soft: #f3f7f5; --border: #dfe8e3; --pitch: #14803f;
+    --warn: #e6a100;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0a0f0d; --fg: #eef4f0; --muted: #9baba3; --soft: #111a16; --border: #1f2e27; --accent: #22c55e; --accent-dark: #16a34a; --pitch: #0f4d2a; --warn: #fbbf24; }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  a { color: inherit; }
+
+  /* nav */
+  header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .nav { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+  .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .links { display: flex; gap: 22px; align-items: center; }
+  .links a { text-decoration: none; color: var(--muted); font-size: .95rem; font-weight: 500; }
+  .links a:hover { color: var(--fg); }
+  @media (max-width: 700px) { .links a.hide-sm { display: none; } }
+
+  .btn { display: inline-block; background: var(--accent); color: #fff !important; padding: 12px 22px; border-radius: 10px; text-decoration: none; font-weight: 600; border: 0; font-size: 1rem; cursor: pointer; }
+  .btn:hover { background: var(--accent-dark); }
+  .btn.ghost { background: transparent; color: var(--fg) !important; border: 1px solid var(--border); }
+  .btn.ghost:hover { background: var(--soft); }
+  .btn.sm { padding: 8px 16px; font-size: .9rem; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding: 72px 0 64px; }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding: 48px 0 40px; } }
+  .tag { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--accent); background: var(--soft); border: 1px solid var(--border); padding: 4px 12px; border-radius: 999px; margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(2.1rem, 5.4vw, 3.4rem); line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 18px; }
+  .hero p { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .viz { background: var(--soft); border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
+  .viz svg { width: 100%; height: auto; display: block; border-radius: 10px; }
+  .viz small { display: block; margin-top: 10px; color: var(--muted); font-size: .8rem; text-align: center; }
+
+  /* sections */
+  section.block { padding: 72px 0; }
+  section.alt { background: var(--soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 8px; }
+  h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px; }
+  .lead { color: var(--muted); font-size: 1.1rem; max-width: 680px; margin: 0 0 36px; }
+  .grid { display: grid; gap: 18px; }
+  .g4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+  section.alt .card { background: var(--bg); }
+  .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .98rem; }
+  .card .q { color: var(--fg); font-weight: 600; margin-bottom: 10px; }
+  .num { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: .9rem; margin-bottom: 12px; }
+  .callout { margin-top: 32px; padding: 22px 26px; border-left: 4px solid var(--accent); background: var(--soft); border-radius: 0 12px 12px 0; font-size: 1.1rem; font-weight: 600; }
+  section.alt .callout { background: var(--bg); }
+
+  /* contact */
+  .contact { max-width: 560px; margin: 0 auto; }
+  .contact h2, .contact .lead { text-align: center; margin-left: auto; margin-right: auto; }
+  form { display: grid; gap: 14px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+  label { font-weight: 600; font-size: .9rem; display: grid; gap: 6px; }
+  input, textarea, select { font: inherit; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--fg); width: 100%; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  .hidden { display: none; }
+  .note { color: var(--muted); font-size: .85rem; text-align: center; margin: 0; }
+
+  footer { padding: 32px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">Tactiq<span>Labs</span></a>
+    <nav class="links">
+      <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="#product">Product</a>
+      <a class="hide-sm" href="#why">Why Tactiq</a>
+      <a class="btn sm" href="#contact">Request a pilot</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="tag">Football intelligence · Built in Egypt for MENA &amp; Africa</div>
+      <h1>From match footage to the decision that matters</h1>
+      <p>Tactiq Labs turns the video your club already records into verified player and ball tracking, tactical insight and coach-ready clips, with the analyst always in control.</p>
+      <div class="cta">
+        <a class="btn" href="#contact">Request a pilot</a>
+        <a class="btn ghost" href="#how">See how it works</a>
+      </div>
+    </div>
+
+    <div class="viz" aria-label="Illustration of tracked players on a pitch, with one low-confidence detection flagged for review">
+      <svg viewBox="0 0 400 260" role="img">
+        <rect width="400" height="260" fill="var(--pitch)"/>
+        <g fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5">
+          <rect x="14" y="14" width="372" height="232"/>
+          <line x1="200" y1="14" x2="200" y2="246"/>
+          <circle cx="200" cy="130" r="32"/>
+          <rect x="14" y="82" width="52" height="96"/>
+          <rect x="334" y="82" width="52" height="96"/>
+          <rect x="14" y="108" width="20" height="44"/>
+          <rect x="366" y="108" width="20" height="44"/>
+        </g>
+        <!-- team A -->
+        <g fill="#ffffff" stroke="#0f9d58" stroke-width="2">
+          <circle cx="70" cy="130" r="6"/><circle cx="120" cy="70" r="6"/><circle cx="125" cy="130" r="6"/>
+          <circle cx="120" cy="195" r="6"/><circle cx="190" cy="100" r="6"/><circle cx="215" cy="165" r="6"/>
+          <circle cx="262" cy="125" r="6"/><circle cx="300" cy="80" r="6"/>
+        </g>
+        <!-- team B -->
+        <g fill="#1f2937" stroke="#ffffff" stroke-width="1.5">
+          <circle cx="330" cy="130" r="6"/><circle cx="285" cy="185" r="6"/><circle cx="248" cy="85" r="6"/>
+          <circle cx="205" cy="130" r="6"/><circle cx="165" cy="160" r="6"/><circle cx="305" cy="130" r="6"/>
+        </g>
+        <!-- movement trail -->
+        <path d="M190 100 Q 215 80 248 85" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 4" opacity=".8"/>
+        <!-- ball -->
+        <circle cx="252" cy="122" r="4" fill="#ffd54a" stroke="#fff" stroke-width="1"/>
+        <!-- low confidence flag -->
+        <circle cx="165" cy="160" r="13" fill="none" stroke="var(--warn)" stroke-width="2" stroke-dasharray="3 3"/>
+        <g font-family="system-ui, sans-serif" font-size="10" font-weight="600">
+          <rect x="96" y="204" width="132" height="20" rx="10" fill="var(--warn)"/>
+          <text x="162" y="218" text-anchor="middle" fill="#1b1500">Low confidence · review</text>
+        </g>
+      </svg>
+      <small>Illustration: uncertainty is flagged, never hidden.</small>
+    </div>
+  </section>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="block alt" id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Built around speed, visible uncertainty and human control</h2>
+    <p class="lead">Six steps from the final whistle to a decision your staff can act on and audit.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">1</div><h3>Accept the match</h3><p>Upload the video and confirm the line-up. We check the footage is suitable for the outputs you need.</p></div>
+      <div class="card"><div class="num">2</div><h3>Track players and ball</h3><p>The pitch is calibrated, players and the ball are tracked, and events and tactical patterns are built on top.</p></div>
+      <div class="card"><div class="num">3</div><h3>Surface uncertainty</h3><p>Low-confidence identities, occlusions and ball gaps are flagged instead of hidden.</p></div>
+      <div class="card"><div class="num">4</div><h3>Verify quickly</h3><p>Your analyst reviews the sections that matter, fixes identities or events, and keeps control of the football interpretation.</p></div>
+      <div class="card"><div class="num">5</div><h3>Deliver decisions</h3><p>Coaches receive a short brief, linked clips and a searchable match, without rebuilding the analysis.</p></div>
+      <div class="card"><div class="num">6</div><h3>Learn from correction</h3><p>Accepted corrections improve your club profile and the workflow over time, subject to explicit data rights.</p></div>
+    </div>
+    <div class="callout">A coach can act on it. An analyst can audit it. A player can understand it.</div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="block" id="product">
+  <div class="wrap">
+    <p class="eyebrow">What we build</p>
+    <h2>A focused performance product, not a wall of metrics</h2>
+    <p class="lead">Every conclusion links back to the source video. Every output answers a question a coach or analyst actually asks.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Match Intelligence</h3>
+        <p class="q">What happened, where did the structure break, and what deserves review?</p>
+        <p>A searchable match timeline with linked events, team shape, line height, pressing, transitions, progression, set pieces and coach playlists.</p>
+      </div>
+      <div class="card">
+        <h3>Opposition Intelligence</h3>
+        <p class="q">How does the opponent build, press, transition and defend?</p>
+        <p>Pre-match dossiers with exploitable patterns, expected structure, build-up and pressing maps, set-piece notes and supporting clips.</p>
+      </div>
+      <div class="card">
+        <h3>Player Development</h3>
+        <p class="q">How is the player changing, and which behaviours should be coached next?</p>
+        <p>Season profiles, role-based metrics, off-ball contribution, technical actions, trends, clips and coach comments.</p>
+      </div>
+      <div class="card">
+        <h3>Analyst Review Studio</h3>
+        <p class="q">Where is the system uncertain, and how can the analyst correct it fast?</p>
+        <p>Confidence queues, identity correction, event review, clip validation and version history. It makes the analyst faster, not invisible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY TACTIQ -->
+<section class="block alt" id="why">
+  <div class="wrap">
+    <p class="eyebrow">Why Tactiq Labs</p>
+    <h2>The advantage isn't one model. It's how the whole workflow fits your club.</h2>
+    <p class="lead">Five principles shape the product, the code and the way we work with clubs.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Own-video first</h3><p>Your matches, academy footage and internal questions are the starting point.</p></div>
+      <div class="card"><h3>Hardware-agnostic</h3><p>We work with suitable broadcast, tactical, wide-angle or approved single-camera footage you already have.</p></div>
+      <div class="card"><h3>Evidence-first</h3><p>Outputs link to video, show confidence and make correction easy. Uncertainty stays visible.</p></div>
+      <div class="card"><h3>Club-specific</h3><p>The system learns your roles, language and tactical principles, so it gets more useful every season.</p></div>
+      <div class="card"><h3>Built for the real match</h3><p>Tested on camera shake, changing light, occlusion, similar kits and imperfect uploads, the conditions clubs in MENA and Africa actually face.</p></div>
+      <div class="card"><h3>Your data stays yours</h3><p>Club footage, tactics and player information are private by default. Any wider use needs clear contracts and explicit rights.</p></div>
+    </div>
+    <div class="callout">We support analysts and coaches. The football decision always stays with you.</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block" id="contact">
+  <div class="wrap contact">
+    <p class="eyebrow" style="text-align:center">Get in touch</p>
+    <h2>Let's start with one match</h2>
+    <p class="lead">Tell us about your club and the decision you want to speed up. We'll reply personally.</p>
+
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="dd87d186-4a7e-483a-b6c7-4656b7e11e0b">
+      <input type="hidden" name="subject" value="New enquiry from tactiqlabs.com">
+      <input type="hidden" name="from_name" value="Tactiq Labs website">
+      <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="row">
+        <label>Name <input type="text" name="name" required autocomplete="name"></label>
+        <label>Email <input type="email" name="email" required autocomplete="email"></label>
+      </div>
+      <div class="row">
+        <label>Club / organization <input type="text" name="organization"></label>
+        <label>Phone (optional) <input type="tel" name="phone" autocomplete="tel"></label>
+      </div>
+      <div class="row">
+        <label>Your role
+          <select name="role">
+            <option value="">Select…</option>
+            <option>Coach</option>
+            <option>Performance / video analyst</option>
+            <option>Academy director</option>
+            <option>Sporting director</option>
+            <option>League / federation</option>
+            <option>Investor / partner</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>I'm interested in
+          <select name="interest">
+            <option value="">Select…</option>
+            <option>A pilot with our matches</option>
+            <option>A demo</option>
+            <option>A partnership</option>
+            <option>Just learning more</option>
+          </select>
+        </label>
+      </div>
+      <label>Message <textarea name="message" rows="4" required></textarea></label>
+      <button class="btn" type="submit" id="send-btn">Send</button>
+      <p class="note" id="form-note">We only use your details to reply to you.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Tactiq Labs</span>
+    <span>tactiqlabs.com · Built in Egypt for MENA &amp; Africa</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('send-btn');
+      var note = document.getElementById('form-note');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.success) { window.location.href = 'thanks.html'; }
+          else { throw new Error('failed'); }
+        })
+        .catch(function () {
+          btn.disabled = false; btn.textContent = 'Send';
+          note.textContent = 'Something went wrong. Please try again or email us directly.';
+          note.style.color = '#d33';
+        });
+    });
+  })();
+</script>
+</body>
+</html>
